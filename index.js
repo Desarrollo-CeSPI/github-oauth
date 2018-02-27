@@ -71,5 +71,6 @@ module.exports = function(opts) {
   emitter.login = login
   emitter.callback = callback
   emitter.addRoutes = addRoutes
+  emitter.changeState = changeState
   return emitter
 }
