@@ -7,7 +7,7 @@ module.exports = function(opts) {
   if (!opts.callbackURI) opts.callbackURI = '/github/callback'
   if (!opts.loginURI) opts.loginURI = '/github/login'
   if (typeof opts.scope === 'undefined') opts.scope = 'user'
-  if (typeof opts.state === 'undefined') opts.state = crypto.randomBytes(8).toString('hex')
+  if (typeof opts.state === 'undefined') opts.state = '0'
   var urlObj = url.parse(opts.baseURL)
   urlObj.pathname = url.resolve(urlObj.pathname, opts.callbackURI)
   var redirectURI = url.format(urlObj)
