@@ -7,12 +7,16 @@ module.exports = function(opts) {
   if (!opts.callbackURI) opts.callbackURI = '/github/callback'
   if (!opts.loginURI) opts.loginURI = '/github/login'
   if (typeof opts.scope === 'undefined') opts.scope = 'user'
-  if (typeof opts.scope === 'undefined') opts.state = crypto.randomBytes(8).toString('hex')
+  if (typeof opts.state === 'undefined') opts.state = crypto.randomBytes(8).toString('hex')
   var urlObj = url.parse(opts.baseURL)
   urlObj.pathname = url.resolve(urlObj.pathname, opts.callbackURI)
   var redirectURI = url.format(urlObj)
   var emitter = new events.EventEmitter()
-  
+
+  function changeState(state) {
+    opts.state = state
+  }
+
   function addRoutes(router, loginCallback) {
     // compatible with flatiron/director
     router.get(opts.loginURI, login)
