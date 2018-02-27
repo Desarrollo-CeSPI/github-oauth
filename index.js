@@ -7,7 +7,7 @@ module.exports = function(opts) {
   if (!opts.callbackURI) opts.callbackURI = '/github/callback'
   if (!opts.loginURI) opts.loginURI = '/github/login'
   if (typeof opts.scope === 'undefined') opts.scope = 'user'
-  var state = crypto.randomBytes(8).toString('hex')
+  if (typeof opts.scope === 'undefined') opts.state = crypto.randomBytes(8).toString('hex')
   var urlObj = url.parse(opts.baseURL)
   urlObj.pathname = url.resolve(urlObj.pathname, opts.callbackURI)
   var redirectURI = url.format(urlObj)
@@ -31,7 +31,7 @@ module.exports = function(opts) {
         + '?client_id=' + opts.githubClient
         + (opts.scope ? '&scope=' + opts.scope : '')
         + '&redirect_uri=' + redirectURI
-        + '&state=' + state
+        + '&state=' + opts.state
         ;
     resp.statusCode = 302
     resp.setHeader('location', u)
@@ -46,7 +46,7 @@ module.exports = function(opts) {
        + '?client_id=' + opts.githubClient
        + '&client_secret=' + opts.githubSecret
        + '&code=' + code
-       + '&state=' + state
+       + '&state=' + opts.state
        ;
     request.get({url:u, json: true}, function (err, tokenResp, body) {
       if (err) {
