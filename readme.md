@@ -12,7 +12,7 @@ var githubOAuth = require('github-oauth')({
   loginURI: '/login',
   callbackURI: '/callback',
   scope: 'user', // optional, default scope is set to user
-  state: 'some' // optional, default state is a random string
+  state: 'example' // optional, default state is a random string
 })
 
 require('http').createServer(function(req, res) {
